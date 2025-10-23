@@ -1,70 +1,108 @@
-# Getting Started with Create React App
+# Calculadora React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Pequena calculadora construída com Create React App. Este repositório contém uma versão com hot-reload (modo desenvolvimento) dentro de container e também uma configuração para build de produção com Nginx.
 
-## Available Scripts
+## Requisitos
 
-In the project directory, you can run:
+- Docker e Docker Compose (para executar em containers), eu uso WSL2 com Docker Enginne
+- Node.js (somente para desenvolvimento local sem Docker)
 
-### `npm start`
+## Executando com Docker Compose
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Incluí duas opções no `docker-compose.yml`:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Desenvolvimento (usa o servidor de desenvolvimento do React para hot-reload)
+- Build de produção com um `Dockerfile` multi-stage que serve via Nginx
 
-### `npm test`
+### Levantar em modo desenvolvimento (hot-reload)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Certifique-se de que o Docker e o Docker Compose estão instalados.
+2. No diretório do projeto, execute:
 
-### `npm run build`
+```bash
+docker compose up --build
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Isto cria um container que expõe a aplicação em `http://localhost:3000` com hot-reload habilitado. As alterações em `src/` e `public/` serão refletidas automaticamente.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Scripts locais (sem Docker)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+No diretório do projeto:
 
-### `npm run eject`
+Instale dependências:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+npm install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Executar em modo desenvolvimento:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+npm start
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Build de produção:
 
-## Learn More
+```bash
+npm run build
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Build de produção (Nginx)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Se preferir rodar a versão de produção servida por Nginx, há um `Dockerfile` multi-stage que gera os arquivos estáticos e um `nginx.conf` para servir a aplicação.
 
-### Code Splitting
+Para criar a imagem de produção manualmente:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+docker build -t calculadora-prod -f Dockerfile .
+```
 
-### Analyzing the Bundle Size
+E para rodar um container baseado na imagem:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+docker run --rm -p 3000:80 calculadora-prod
+```
 
-### Making a Progressive Web App
+A aplicação ficará disponível em `http://localhost:3000`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Mapas rápidos de teclas (teclado)
 
-### Advanced Configuration
+A calculadora suporta entrada via teclado (teclas numéricas e numpad), operadores (`+ - * /`), `%`, Enter (para `=`), `Backspace` e `Escape` para limpar. Também há destaque visual do botão quando a tecla correspondente é pressionada.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Números: 0-9 (principal e numpad)
+- Operadores: `+`, `-`, `*` (multiplicação), `/` (divisão)
+- `Enter` ou `=`: calcula
+- `%`: porcentagem
+- `.` ou `,`: decimal
+- `Backspace` / `Escape`: limpar
 
-### Deployment
+## Observações e próximos passos
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- O botão `+/-` inverte o sinal do número mostrado.
+- A vírgula `,` é aceita como separador decimal e normalizada internamente.
+- Backspace atualmente faz um clear total;
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+---
+
+### 👨‍💻 Expert
+
+<p>
+<img 
+      align="left" 
+      style="margin: 10px; width: 80px; border-radius: 50%;" 
+      src="https://avatars.githubusercontent.com/u/52001930?s=400&u=fb999c966c5c652a8357cbede4b1112e79cbfe18&v=4" 
+/>
+    <p style="padding-top:25px">&nbsp&nbsp&nbsp Wagner Andrade<br>
+    &nbsp&nbsp&nbsp
+    <a href="https://github.com/wsawebmaster">
+    GitHub</a>&nbsp;|&nbsp;
+    <a href="https://www.linkedin.com/in/
+wsawebmaster">LinkedIn</a>
+&nbsp;|&nbsp;
+<a href="mailto:wsawebmaster@yahoo.com.br">
+    Email</a>
+  &nbsp;|&nbsp;
+</p>
+</p>

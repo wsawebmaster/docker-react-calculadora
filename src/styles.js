@@ -12,8 +12,8 @@ export const Container = styled.div`
 
 
 export const Content = styled.div`
-    background-color: #FFFFFF;
-    width: 50%;
+    background-color: #3a3a3d;
+    width: 25%;
 `
 
 export const Row = styled.div`
